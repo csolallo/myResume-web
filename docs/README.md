@@ -21,3 +21,5 @@ ruby -run -ehttpd . -p8000
 [setup walk-thru](https://medium.com/@coorasse/goodbye-sprockets-welcome-webpacker-3-0-ff877fb8fa79)
 
 if you do `~` search is relative node_modules.
+
+bundle exec rdebug-ide --debug --host 0.0.0.0 --port 1234

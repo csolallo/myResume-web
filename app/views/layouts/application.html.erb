@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>InCV &mdash; Responsive CV / Resume HTML5 Template (4 skins)</title>
+  <title><%= "#{@response[:name.to_s]}'s Resume" %></title>
   <meta name="description" content="InCV &mdash; An authentic customizable HTML5 CV / Resume template">
   <meta name="author" content="www.inthe.me">
 
@@ -57,8 +57,8 @@
         </div>
 
         <div class="wrap-title">
-          <h1>CV of <span>John Doe</span></h1>
-          <p>experienced PHP developer</p>
+          <h1>CV of <span><%= @response[:name.to_s] %></span></h1>
+          <p>experienced software developer</p>
         </div>
 
         <div class="social-services">
