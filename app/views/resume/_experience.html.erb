@@ -1,0 +1,15 @@
+        <% resume['jobs'].each do |job| %>
+        <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+          <div class="resume-content">
+            <h3 class="mb-0"><%= job['title'] %></h3>
+            <div class="subheading mb-3"><%= company_for(job, in_companies: resume['companies'])['name'] %></div>
+            <% job['projects'].each do |project| %>
+            <p class="mb-1 font-weight-bold"><%= project['name'] %></p>
+            <p><%= project['description'] %>.</p>
+            <% end %>
+          </div>
+          <div class="resume-date text-md-right">
+            <span class="text-primary"><%= format_date job['start_date'] %> - Present</span>
+          </div>
+        </div>
+        <% end %>
