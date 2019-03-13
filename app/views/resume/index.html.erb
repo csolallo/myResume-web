@@ -65,7 +65,7 @@
       <div class="w-100">
         <h2 class="mb-5">Experience</h2>
 
-        <%= render 'experience', resume: @response[:resume] %>
+        <%= render 'experience', {resume: @response[:resume], include_more: true} %>
       </div>
 
     </section>
