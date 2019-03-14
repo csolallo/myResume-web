@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
       <span class="d-block d-lg-none">Clarence Taylor</span>
       <span class="d-none d-lg-block">
@@ -65,7 +65,7 @@
       <div class="w-100">
         <h2 class="mb-5">Experience</h2>
 
-        <%= render 'experience', {resume: @response[:resume], include_more: true} %>
+        <%= render 'experience', {resume: @response[:resume], up_to: @five_years_ago} %>
       </div>
 
     </section>
@@ -103,3 +103,14 @@
     </section>
 
   </div>
+
+  <script>
+  function bindEvents($) {
+    $(document).ready(function() {
+      $('#more-link').off('click').on('click', function(e) {
+        e.preventDefault();
+        alert('here');
+      })
+    })
+  }
+  </script>

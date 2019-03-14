@@ -18,8 +18,22 @@ class ResumeController < ApplicationController
         process_highlights user_info[:highlights]
         process_resume user_info[:resume]
 
-        # @response[:resume] has what we need. no need to pass as a param
-        fetch_resume root_url: root_url
+        @five_years_ago = 5.years.ago.strftime '%-m/%-y/%Y'
+        fetch_resume root_url: root_url, id: @response[:resume]['resume']
+    end
+
+    # ajax call for jobs that were started before the passed in date
+    def older_jobs
+        id = params[:id]
+        most_current_date = params[:upto]
+
+        root_url = Rails.application.config.api_root
+
+        fetch_resume root_url: root_url, id: @response[:resume]['resume']
+
+        #TODO Filter
+
+        render inline: '<div>Hello</hello>'
     end
 
     private 
@@ -109,17 +123,16 @@ class ResumeController < ApplicationController
         end
     end
 
-    def fetch_resume(root_url:)
+    def fetch_resume(root_url:, id:)
         t = Thread.new do
-            five_years_ago = 5.years.ago.strftime '%-m/%-y/%Y'
-            uri = URI.parse "#{root_url}/resume/#{@response[:resume]['resume']}/jobs.json?since=#{five_years_ago}"
+            uri = URI.parse "#{root_url}/resume/#{id}/jobs.json?since=#{@five_years_ago}"
             resp = Net::HTTP.get(uri)
             Thread.current[:response] = resp
         end
         t.join
         
         process_api_response(t[:response]) do |json|
-            @response[:resume] = json
+            @response[:resume] = {:id => id, :data => json}
         end
     end
 end

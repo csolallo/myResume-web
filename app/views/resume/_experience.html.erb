@@ -1,8 +1,8 @@
-        <% resume['jobs'].each do |job| %>
+        <%resume[:data]['jobs'].each do |job| %>
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="resume-content">
             <h3 class="mb-0"><%= job['title'] %></h3>
-            <div class="subheading mb-3"><%= company_for(job, in_companies: resume['companies'])['name'] %></div>
+            <div class="subheading mb-3"><%= company_for(job, in_companies:resume[:data]['companies'])['name'] %></div>
             <% job['projects'].each_with_index do |project, idx| %>
               <h5 class="mb-1"><%= project['name'] %></h5>
               <p><%= project['description'] %>.</p>
@@ -22,8 +22,8 @@
         </div>
         <% end %>
 
-        <% if !include_more.nil? && include_more == true %>
+        <% if !up_to.nil?  %>
         <div id="more-container">
-          <a href="#">more</a>
+          <a id="more-link" href="<%= older_jobs_path resume[:id] %>?upto=<%= up_to %>">more</a>
         </div>
         <% end %>
