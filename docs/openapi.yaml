@@ -1,0 +1,372 @@
+---
+openapi: 3.0.1
+info:
+  title: MyResume API
+  version: v1
+paths:
+  "/api/v1/people":
+    get:
+      summary: people
+      description: Get all people
+      tags:
+      - Person
+      responses:
+        '200':
+          description: queried for all people
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - uuid
+                  - name
+                  properties:
+                    uuid:
+                      type: string
+                    name:
+                      type: string
+  "/api/v1/person/{uuid}/info":
+    parameters:
+    - name: uuid
+      in: path
+      required: true
+      description: id of the person being queried
+      schema:
+        type: string
+    get:
+      summary: info
+      description: Get contact information for person
+      tags:
+      - Person
+      responses:
+        '200':
+          description: queried using a valid person id
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - name
+                properties:
+                  name:
+                    type: string
+                  address1:
+                    type: string
+                  address2:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  zip:
+                    type: string
+                  number:
+                    type: string
+                  email:
+                    type: string
+        '404':
+          description: queried using an invalid person id
+  "/api/v1/person/{uuid}/education":
+    parameters:
+    - name: uuid
+      in: path
+      required: true
+      description: id of the person being queried
+      schema:
+        type: string
+    get:
+      summary: education
+      description: Get education history and certificates for person
+      tags:
+      - Person
+      responses:
+        '200':
+          description: queried using a valid person id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - origin
+                  - title
+                  properties:
+                    origin:
+                      type: string
+                    title:
+                      type: string
+                    gpa:
+                      type: string
+                    year:
+                      type: integer
+        '404':
+          description: queried using an invalid person id
+  "/api/v1/person/{uuid}/highlights":
+    parameters:
+    - name: uuid
+      in: path
+      required: true
+      description: id of the person being queried
+      schema:
+        type: string
+    get:
+      summary: career highlights
+      description: Bulleted list of career highlights for person
+      tags:
+      - Person
+      responses:
+        '200':
+          description: queried with a valid person id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '404':
+          description: queried using invalid person id
+  "/api/v1/person/{uuid}/resume":
+    parameters:
+    - name: uuid
+      in: path
+      required: true
+      description: id of the person being queried
+      schema:
+        type: string
+    get:
+      summary: resume id
+      description: get the id of the resume associated with person
+      tags:
+      - Person
+      responses:
+        '200':
+          description: queried with valid person id
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - resume
+                properties:
+                  resume:
+                    type: integer
+        '404':
+          description: queried using an invalid person id
+  "/api/v1/resume/{id}/jobs":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: id of the desired resume
+      schema:
+        type: integer
+    - name: since
+      in: query
+      required: false
+      description: only list jobs that started on or after this date (mm/dd/yyyy),
+        or started earlier and were still active on it
+      schema:
+        type: string
+    get:
+      summary: jobs
+      description: Get job details for the resume
+      tags:
+      - Resume
+      responses:
+        '200':
+          description: queried using a valid resume id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resume"
+        '404':
+          description: queried using an invalid resume id
+  "/api/v1/resume/{id}/tags":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: id of the desired resume
+      schema:
+        type: integer
+    get:
+      summary: tags
+      description: Get all tags - across all jobs - for the resume
+      tags:
+      - Resume
+      responses:
+        '200':
+          description: queried using a valid resume id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/tag"
+        '404':
+          description: queried using an invalid resume id
+  "/api/v1/resume/{id}/tags/{tags}/jobs":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: id of the desired resume
+      schema:
+        type: integer
+    - name: tags
+      in: path
+      required: true
+      description: array of tag ids to fillter by
+      schema:
+        type: array
+        items:
+          type: integer
+    get:
+      summary: jobs
+      description: Get job details for the resume
+      tags:
+      - Resume
+      responses:
+        '200':
+          description: queried using a valid resume id and list of tags
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resume"
+        '404':
+          description: queried using a valid resume id but invalid tags
+components:
+  schemas:
+    tag:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    company:
+      type: object
+      required:
+      - id
+      - name
+      - address1
+      - address2
+      - city
+      - state
+      - zip
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        address1:
+          type: string
+          nullable: true
+        address2:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        zip:
+          type: string
+          nullable: true
+    job:
+      type: object
+      required:
+      - title
+      - start_date
+      - end_date
+      - company_id
+      - projects
+      properties:
+        title:
+          type: string
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+          nullable: true
+        company_id:
+          type: integer
+        projects:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - description
+            - accomplishments
+            - tags
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              accomplishments:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - description
+                  properties:
+                    description:
+                      type: string
+              apps:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - name
+                  - platform
+                  - url
+                  - comment
+                  - image_url
+                  properties:
+                    name:
+                      type: string
+                    platform:
+                      type: string
+                    url:
+                      type: string
+                      nullable: true
+                    comment:
+                      type: string
+                      nullable: true
+                    image_url:
+                      type: string
+                      nullable: true
+              tags:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/tag"
+    resume:
+      type: object
+      required:
+      - companies
+      - jobs
+      properties:
+        companies:
+          type: array
+          items:
+            "$ref": "#/components/schemas/company"
+        jobs:
+          type: array
+          items:
+            "$ref": "#/components/schemas/job"
+servers:
+- url: https://resume.sola-llon.ch
+  description: Production environment
+- url: https://localhost:3001
+  description: Testing environment. Internal use only
