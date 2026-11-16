@@ -15,7 +15,8 @@ Detail level: ${level}.
 
 Rules:
 - ${LEVEL_RULES[level]}
-- If a job has no accomplishments at all, use its projects' descriptions instead: one concise bullet per project, naming the project. Every job must have at least one bullet (or a summary at the overview level).
+- If a job has no accomplishments at all, use its projects' descriptions as the source material instead. At the overview level, summarize them in the job's "summary" and keep "bullets" []; at the other levels, write one concise bullet per project, naming the project.
+- At the overview level EVERY job must have a non-empty "summary" and an empty "bullets" array, with no exceptions. At the other levels every job must have at least one bullet.
 - Keep jobs in the same order as the input. Use only facts present in the input; never invent employers, dates, numbers or technologies.
 - "summary" is a 2-3 sentence professional summary written from the career highlights.
 - Return ONLY a JSON object, no prose and no code fences, with this shape:
