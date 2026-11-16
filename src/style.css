@@ -3,7 +3,7 @@
 body { margin: 0; background: var(--bg); color: var(--text);
   font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 10.5pt; line-height: 1.35; }
 
-.controls { display: flex; flex-wrap: wrap; gap: 2rem; align-items: end; justify-content: center;
+.controls { display: flex; flex-wrap: wrap; gap: 2rem; align-items: start; justify-content: center;
   padding: 1rem; background: #fff; border-bottom: 1px solid #d0d5dc; position: sticky; top: 0; z-index: 1; }
 .field { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: #444; }
 .field select { padding: .35rem .5rem; font-size: 1rem; }
