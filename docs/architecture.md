@@ -49,7 +49,7 @@ A single page app (SPA) that renders an online resume for a person from the MyRe
 | Level | Output per job |
 |---|---|
 | Overview | One summary paragraph covering all accomplishments, no bullets, no technologies |
-| Detailed | Every accomplishment as a bullet, no technologies |
+| Detailed | 2-3 bullets per job highlighting the most important accomplishments (combined as needed), no technologies |
 | Technical | Every accomplishment as a bullet, plus the job's technologies (from project tags) and a top-level technology list |
 
 Jobs with no accomplishments fall back to one bullet per project description.

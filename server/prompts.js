@@ -4,7 +4,7 @@ const LEVEL_RULES = {
   overview:
     'For each job, write ONE short paragraph (2-3 sentences) in "summary" that summarizes ALL of the job\'s accomplishments across its projects, and set "bullets" to []. Do not include technologies.',
   detailed:
-    'For each job, list EVERY accomplishment verbatim (light grammar fixes only). Do not summarize, merge, or drop any. Do not include technologies.',
+    'For each job, write 2-3 bullets highlighting its most important accomplishments. Combine, condense, and merge the job\'s accomplishments as needed, favoring those with the greatest impact; drop minor ones. Do not include technologies.',
   technical:
     'For each job, list EVERY accomplishment verbatim (light grammar fixes only), and also set "technologies" to the de-duplicated list of technologies (tags) used in that job.',
 }
@@ -15,8 +15,8 @@ Detail level: ${level}.
 
 Rules:
 - ${LEVEL_RULES[level]}
-- If a job has no accomplishments at all, use its projects' descriptions as the source material instead. At the overview level, summarize them in the job's "summary" and keep "bullets" []; at the other levels, write one concise bullet per project, naming the project.
-- At the overview level EVERY job must have a non-empty "summary" and an empty "bullets" array, with no exceptions. At the other levels every job must have at least one bullet.
+- If a job has no accomplishments at all, use its projects' descriptions as the source material instead. At the overview level, summarize them in the job's "summary" and keep "bullets" []; at the technical level, write one concise bullet per project, naming the project; at the detailed level, write 2-3 bullets combining the projects, naming them where useful.
+- At the overview level EVERY job must have a non-empty "summary" and an empty "bullets" array, with no exceptions. At the detailed level every job must have 2-3 bullets (one if the source material only supports one); at the technical level every job must have at least one bullet.
 - Keep jobs in the same order as the input. Use only facts present in the input; never invent employers, dates, numbers or technologies.
 - "summary" is a 2-3 sentence professional summary written from the career highlights.
 - Return ONLY a JSON object, no prose and no code fences, with this shape:
